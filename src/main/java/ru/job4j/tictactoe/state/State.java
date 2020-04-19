@@ -1,9 +1,7 @@
 package ru.job4j.tictactoe.state;
 
-import ru.job4j.tictactoe.player.Player;
-
 public interface State {
-    State perform();
+    void perform(StateContext context);
 
-    default void forPlayer(final Player player) { }
+    boolean isEndState();
 }

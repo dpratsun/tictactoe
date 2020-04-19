@@ -1,6 +1,6 @@
 package ru.job4j.tictactoe.player;
 
-import ru.job4j.tictactoe.table.Mark;
+import ru.job4j.tictactoe.cell.Mark;
 
 public interface Player {
     String getName();
@@ -8,6 +8,4 @@ public interface Player {
     Mark getMark();
 
     void makeMove();
-
-    boolean isExitGame();
 }

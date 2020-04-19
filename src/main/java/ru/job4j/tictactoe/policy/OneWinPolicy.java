@@ -1,37 +1,32 @@
 package ru.job4j.tictactoe.policy;
 
-import ru.job4j.tictactoe.table.Cell;
-import ru.job4j.tictactoe.table.GameTable;
-import ru.job4j.tictactoe.table.Mark;
-
-import java.util.function.Predicate;
+import ru.job4j.tictactoe.cell.Cell;
+import ru.job4j.tictactoe.cell.CellStorage;
+import ru.job4j.tictactoe.cell.Mark;
 
 public class OneWinPolicy implements WinPolicy {
-    private final GameTable table;
+    private final CellStorage storage;
+    private final int boardSize;
 
-    public OneWinPolicy(GameTable table) {
-        this.table = table;
+    public OneWinPolicy(CellStorage storage, int boardSize) {
+        this.storage = storage;
+        this.boardSize = boardSize;
     }
 
     @Override
     public boolean isWin(Mark mark) {
-        return checkWin(c -> mark.equals(c.getMark()));
-    }
-
-    private boolean checkWin(final Predicate<Cell> predicate) {
         boolean result = false;
         int diagonalCnt = 0;
         int mirrorDiagonalCnt = 0;
-        final int tableSize = table.getSize();
 
-        for (int row = 0; row < tableSize; row++) {
-            mirrorDiagonalCnt += predicate.test(table.getCell(tableSize - row - 1, row)) ? 1 : 0;
-            if (mirrorDiagonalCnt == tableSize) {
+        for (int x = 0; x < boardSize; x++) {
+            mirrorDiagonalCnt += mark.equals(getCellMark((boardSize - x - 1), x)) ? 1 : 0;
+            if (mirrorDiagonalCnt == boardSize) {
                 result = true;
                 break;
             }
-            if (predicate.test(table.getCell(row, row))) {
-                if (++diagonalCnt == tableSize || isRowOrColumnFilledByMark(predicate, row)) {
+            if (mark.equals(getCellMark(x, x))) {
+                if (++diagonalCnt == boardSize || isRowOrColumnFilledByMark(mark, x)) {
                     result = true;
                     break;
                 }
@@ -40,15 +35,19 @@ public class OneWinPolicy implements WinPolicy {
         return result;
     }
 
-    private boolean isRowOrColumnFilledByMark(final Predicate<Cell> predicate, final int row) {
+    private boolean isRowOrColumnFilledByMark(Mark mark, final int x) {
         var rowCnt = 0;
         var colCnt = 0;
 
-        for (int col = 0; col < table.getSize(); col++) {
-            rowCnt += predicate.test(table.getCell(row, col)) ? 1 : 0;
-            colCnt += predicate.test(table.getCell(col, row)) ? 1 : 0;
+        for (int y = 0; y < boardSize; y++) {
+            rowCnt += mark.equals(getCellMark(x, y)) ? 1 : 0;
+            colCnt += mark.equals(getCellMark(y, x)) ? 1 : 0;
         }
 
-        return rowCnt == table.getSize() || colCnt == table.getSize();
+        return rowCnt == boardSize || colCnt == boardSize;
+    }
+
+    private Mark getCellMark(int x, int y) {
+        return storage.find(new Cell(x, y)).getMark();
     }
 }

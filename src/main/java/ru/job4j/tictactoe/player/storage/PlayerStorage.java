@@ -8,6 +8,4 @@ public interface PlayerStorage {
     void add(Player player);
 
     List<Player> getAll();
-
-    Player next(Player current);
 }
