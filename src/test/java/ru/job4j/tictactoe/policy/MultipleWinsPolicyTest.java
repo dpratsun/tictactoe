@@ -1,41 +1,34 @@
 package ru.job4j.tictactoe.policy;
 
+import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.tictactoe.table.GameDataTable;
-import ru.job4j.tictactoe.table.GameTable;
+import ru.job4j.tictactoe.policy.impl.MultipleWinsPolicy;
 
 import static org.junit.Assert.*;
-import static ru.job4j.tictactoe.table.Mark.X;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static ru.job4j.tictactoe.cell.Mark.X;
 
 public class MultipleWinsPolicyTest {
+    private WinPolicy oneWinPolicy;
+    private WinPolicy policy;
+
+    @Before
+    public void setUp() {
+        oneWinPolicy = mock(WinPolicy.class);
+        policy = new MultipleWinsPolicy(oneWinPolicy, 2);
+    }
+
     @Test
     public void whenWinCountShouldBe2ThanAfterOneWinLineIsWinShouldReturnFalse() {
-        GameDataTable data = new GameDataTable(GameDataTable.DEFAULT_SIZE);
-        MultipleWinsPolicy policy = new MultipleWinsPolicy(data, 2);
-
-        makeWinLine(data);
-
+        when(oneWinPolicy.isWin(X)).thenReturn(true);
         assertFalse(policy.isWin(X));
     }
 
     @Test
     public void whenWinCountShouldBe2ThanAfterTwoWinLinesIsWinShouldReturnTrue() {
-        GameDataTable data = new GameDataTable(GameDataTable.DEFAULT_SIZE);
-        MultipleWinsPolicy policy = new MultipleWinsPolicy(data, 2);
-
-        makeWinLine(data);
-
+        when(oneWinPolicy.isWin(X)).thenReturn(true, true);
         assertFalse(policy.isWin(X));
-
-        data.reset();
-        makeWinLine(data);
-
         assertTrue(policy.isWin(X));
-    }
-
-    private void makeWinLine(GameTable data) {
-        data.getCell(0, 0).setMark(X);
-        data.getCell(1, 0).setMark(X);
-        data.getCell(2, 0).setMark(X);
     }
 }
