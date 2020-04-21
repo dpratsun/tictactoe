@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 import static ru.job4j.tictactoe.cell.Mark.Empty;
 
 public class BotRandomInput implements PlayerInput {
-    private final BoardCells board;
+    private final BoardCells cells;
     private final Random random;
 
-    public BotRandomInput(BoardCells board, Random random) {
-        this.board = board;
+    public BotRandomInput(BoardCells cells, Random random) {
+        this.cells = cells;
         this.random = random;
     }
 
     @Override
     public Cell get() {
-        List<Cell> cells = board.get()
+        List<Cell> cells = this.cells.get()
                 .stream()
                 .filter(c -> Empty.equals(c.getMark()))
                 .collect(Collectors.toList());

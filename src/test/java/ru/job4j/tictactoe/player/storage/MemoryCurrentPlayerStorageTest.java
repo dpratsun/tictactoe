@@ -1,9 +1,9 @@
-package ru.job4j.tictactoe.player.provider;
+package ru.job4j.tictactoe.player.storage;
 
 import org.junit.Test;
 import ru.job4j.tictactoe.player.Player;
-import ru.job4j.tictactoe.player.provider.impl.CurrentPlayerProvider;
-import ru.job4j.tictactoe.player.storage.PlayerStorage;
+import ru.job4j.tictactoe.player.provider.CurrentPlayerProvider;
+import ru.job4j.tictactoe.player.storage.impl.MemoryCurrentPlayerStorage;
 
 import java.util.List;
 
@@ -12,15 +12,16 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CurrentPlayerProviderTest {
+public class MemoryCurrentPlayerStorageTest {
     @Test
     public void whenGetThanPlayerShouldBeReturned() {
         PlayerStorage storage = mock(PlayerStorage.class);
         Player first = mock(Player.class);
         when(storage.getAll()).thenReturn(List.of(first));
-        CurrentPlayerProvider provider = new CurrentPlayerProvider(storage);
+        MemoryCurrentPlayerStorage currentPlayerStorage = new MemoryCurrentPlayerStorage(storage);
+        currentPlayerStorage.change();
 
-        assertThat(provider.get(), is(first));
+        assertThat(currentPlayerStorage.get(), is(first));
     }
 
     @Test
@@ -29,10 +30,11 @@ public class CurrentPlayerProviderTest {
         Player first = mock(Player.class);
         Player second = mock(Player.class);
         when(storage.getAll()).thenReturn(List.of(first, second));
-        CurrentPlayerProvider provider = new CurrentPlayerProvider(storage);
+        MemoryCurrentPlayerStorage currentPlayerStorage = new MemoryCurrentPlayerStorage(storage);
+        currentPlayerStorage.change();
 
-        assertThat(provider.get(), is(first));
-        provider.change();
-        assertThat(provider.get(), is(second));
+        assertThat(currentPlayerStorage.get(), is(first));
+        currentPlayerStorage.change();
+        assertThat(currentPlayerStorage.get(), is(second));
     }
 }

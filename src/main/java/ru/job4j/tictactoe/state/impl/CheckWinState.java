@@ -13,6 +13,7 @@ public class CheckWinState implements State {
     private final Logic logic;
     private final MessagePrinter printer;
     private final CurrentPlayerProvider provider;
+
     public CheckWinState(StateStorage storage, Logic logic, MessagePrinter printer, CurrentPlayerProvider provider) {
         this.storage = storage;
         this.logic = logic;

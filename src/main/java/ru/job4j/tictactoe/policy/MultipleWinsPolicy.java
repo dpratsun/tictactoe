@@ -21,11 +21,13 @@ public class MultipleWinsPolicy implements WinPolicy {
 
     @Override
     public boolean isWin(Mark mark) {
-        return policy.isWin(mark) && checkWin(mark);
+        if (policy.isWin(mark)) {
+            incrementWinCounter(mark);
+        }
+        return winsToWin == counter.get(mark);
     }
 
-    private boolean checkWin(Mark mark) {
+    private void incrementWinCounter(Mark mark) {
         counter.put(mark, counter.get(mark) + 1);
-        return winsToWin == counter.get(mark);
     }
 }
