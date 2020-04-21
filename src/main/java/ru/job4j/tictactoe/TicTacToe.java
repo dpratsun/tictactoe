@@ -34,7 +34,7 @@ public class TicTacToe {
         var policy = new MultipleWinsPolicy(new OneWinPolicy(board, board), DEFAULT_COUNT_TO_WIN);
         var logic = new GameLogic(policy, board);
 
-        PlayerStorage players = new MemoryPlayerStorage();
+        var players = new MemoryPlayerStorage();
         players.add(new GamePlayer(O, "Dmitry", logic, new HumanConsoleInput(printer), printer));
         players.add(new GamePlayer(X, "Bot", logic, new BotRandomInput(board, new Random()), printer));
 
