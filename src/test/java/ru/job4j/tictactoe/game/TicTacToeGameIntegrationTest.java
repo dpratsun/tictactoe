@@ -57,7 +57,7 @@ public class TicTacToeGameIntegrationTest {
     }
 
     @Test
-    public void name() {
+    public void whenPlayerWinsThanLastMessageShouldContainCongratulationsWithHisName() {
         game.start();
 
         verify(printer, atLeastOnce()).print(Message.PLAYER_WIN_MESSAGE, "Dmitry");
