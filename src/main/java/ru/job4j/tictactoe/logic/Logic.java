@@ -8,7 +8,7 @@ public interface Logic {
 
     boolean isMoveAvailable();
 
-    void makeMove(Cell cell);
+    void playerMove(Cell cell);
 
-    void reset();
+    void resetBoard();
 }

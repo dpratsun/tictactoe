@@ -1,15 +1,16 @@
-package ru.job4j.tictactoe.player.provider.impl;
+package ru.job4j.tictactoe.player.storage.impl;
 
 import ru.job4j.tictactoe.player.Player;
-import ru.job4j.tictactoe.player.provider.PlayerProvider;
+import ru.job4j.tictactoe.player.provider.CurrentPlayerProvider;
+import ru.job4j.tictactoe.player.storage.CurrentPlayerStorage;
 import ru.job4j.tictactoe.player.storage.PlayerStorage;
 
-public class CurrentPlayerProvider implements PlayerProvider {
+public class MemoryCurrentPlayerStorage implements CurrentPlayerStorage, CurrentPlayerProvider {
     private final PlayerStorage storage;
 
     private Player player = null;
 
-    public CurrentPlayerProvider(PlayerStorage storage) {
+    public MemoryCurrentPlayerStorage(PlayerStorage storage) {
         this.storage = storage;
     }
 

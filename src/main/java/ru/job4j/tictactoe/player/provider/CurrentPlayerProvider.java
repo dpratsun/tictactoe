@@ -2,8 +2,6 @@ package ru.job4j.tictactoe.player.provider;
 
 import ru.job4j.tictactoe.player.Player;
 
-public interface PlayerProvider {
+public interface CurrentPlayerProvider {
     Player get();
-
-    void change();
 }

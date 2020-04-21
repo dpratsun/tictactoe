@@ -1,16 +1,16 @@
 package ru.job4j.tictactoe.policy;
 
-import ru.job4j.tictactoe.cell.Cell;
-import ru.job4j.tictactoe.cell.CellStorage;
+import ru.job4j.tictactoe.board.BoardCell;
+import ru.job4j.tictactoe.board.BoardSize;
 import ru.job4j.tictactoe.cell.Mark;
 
 public class OneWinPolicy implements WinPolicy {
-    private final CellStorage storage;
-    private final int boardSize;
+    private final BoardCell cellProvider;
+    private final BoardSize sizeProvider;
 
-    public OneWinPolicy(CellStorage storage, int boardSize) {
-        this.storage = storage;
-        this.boardSize = boardSize;
+    public OneWinPolicy(BoardCell cellProvider, BoardSize sizeProvider) {
+        this.cellProvider = cellProvider;
+        this.sizeProvider = sizeProvider;
     }
 
     @Override
@@ -19,14 +19,14 @@ public class OneWinPolicy implements WinPolicy {
         int diagonalCnt = 0;
         int mirrorDiagonalCnt = 0;
 
-        for (int x = 0; x < boardSize; x++) {
-            mirrorDiagonalCnt += mark.equals(getCellMark((boardSize - x - 1), x)) ? 1 : 0;
-            if (mirrorDiagonalCnt == boardSize) {
+        for (int x = 0; x < sizeProvider.size(); x++) {
+            mirrorDiagonalCnt += mark.equals(getCellMark((sizeProvider.size() - x - 1), x)) ? 1 : 0;
+            if (mirrorDiagonalCnt == sizeProvider.size()) {
                 result = true;
                 break;
             }
             if (mark.equals(getCellMark(x, x))) {
-                if (++diagonalCnt == boardSize || isRowOrColumnFilledByMark(mark, x)) {
+                if (++diagonalCnt == sizeProvider.size() || isRowOrColumnFilledByMark(mark, x)) {
                     result = true;
                     break;
                 }
@@ -39,15 +39,15 @@ public class OneWinPolicy implements WinPolicy {
         var rowCnt = 0;
         var colCnt = 0;
 
-        for (int y = 0; y < boardSize; y++) {
+        for (int y = 0; y < sizeProvider.size(); y++) {
             rowCnt += mark.equals(getCellMark(x, y)) ? 1 : 0;
             colCnt += mark.equals(getCellMark(y, x)) ? 1 : 0;
         }
 
-        return rowCnt == boardSize || colCnt == boardSize;
+        return rowCnt == sizeProvider.size() || colCnt == sizeProvider.size();
     }
 
     private Mark getCellMark(int x, int y) {
-        return storage.find(new Cell(x, y)).getMark();
+        return cellProvider.get(x, y).getMark();
     }
 }

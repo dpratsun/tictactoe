@@ -3,6 +3,7 @@ package ru.job4j.tictactoe.cell;
 import java.util.Objects;
 
 import static ru.job4j.tictactoe.cell.Mark.Empty;
+import static ru.job4j.tictactoe.message.Message.CELL_MARKED_ERROR_MESSAGE;
 
 public class Cell {
     private final int x;
@@ -14,11 +15,20 @@ public class Cell {
         this.y = y;
     }
 
+    public Cell(int x, int y, Mark mark) {
+        this.x = x;
+        this.y = y;
+        this.mark = mark;
+    }
+
     public Mark getMark() {
         return mark;
     }
 
     public void setMark(Mark mark) {
+        if (!Empty.equals(this.mark)) {
+            throw new IllegalArgumentException(CELL_MARKED_ERROR_MESSAGE.getValue());
+        }
         this.mark = mark;
     }
 

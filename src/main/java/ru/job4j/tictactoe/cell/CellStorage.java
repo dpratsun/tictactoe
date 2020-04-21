@@ -7,5 +7,9 @@ public interface CellStorage {
 
     Cell find(Cell cell);
 
+    void update(Cell cell);
+
     List<Cell> findAll();
+
+    void clear();
 }

@@ -1,7 +1,7 @@
-package ru.job4j.tictactoe.messages.impl;
+package ru.job4j.tictactoe.message.impl;
 
-import ru.job4j.tictactoe.messages.MessagePrinter;
-import ru.job4j.tictactoe.messages.Messages;
+import ru.job4j.tictactoe.message.MessagePrinter;
+import ru.job4j.tictactoe.message.Message;
 import ru.job4j.tictactoe.output.Output;
 
 public class GameMessagePrinter implements MessagePrinter {
@@ -12,12 +12,12 @@ public class GameMessagePrinter implements MessagePrinter {
     }
 
     @Override
-    public void print(Messages message) {
+    public void print(Message message) {
         output.print(message.getValue());
     }
 
     @Override
-    public void print(Messages message, String... args) {
+    public void print(Message message, String... args) {
         output.print(message.getValue(args));
     }
 

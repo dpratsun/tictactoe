@@ -1,6 +1,6 @@
-package ru.job4j.tictactoe.messages;
+package ru.job4j.tictactoe.message;
 
-public enum Messages {
+public enum Message {
     START_MESSAGE(
       """
       Welcome to TicTacToe Game!
@@ -11,11 +11,13 @@ public enum Messages {
     PLAYER_MOVE_PERFORMED_MESSAGE("Player %s, performed his move:"),
     PLAYER_WIN_MESSAGE("Congratulation player %s with a win!"),
     NO_AVAILABLE_MOVES_MESSAGE("There are no more available moves. Resetting the table."),
-    INDEX_INPUT_ERROR("Seems you input wrong indexes for cell. Please input two numbers from 0 to %s.");
+    INDEX_INPUT_ERROR_MESSAGE("Seems you input wrong indexes for cell. Input indexes from 0 to %s"),
+    CELL_MARKED_ERROR_MESSAGE("Cell already marked!"),
+    CELL_ADDED_ERROR_MESSAGE("Cell already added!");
 
     private final String value;
 
-    Messages(String value) {
+    Message(String value) {
         this.value = value;
     }
 

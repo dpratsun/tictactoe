@@ -1,37 +1,39 @@
 package ru.job4j.tictactoe.view.impl;
 
-import ru.job4j.tictactoe.cell.CellStorage;
-import ru.job4j.tictactoe.view.View;
+import ru.job4j.tictactoe.board.BoardCells;
+import ru.job4j.tictactoe.board.BoardSize;
 import ru.job4j.tictactoe.cell.Cell;
+import ru.job4j.tictactoe.view.View;
 
 import java.util.List;
 
-import static java.lang.System.*;
+import static java.lang.System.lineSeparator;
+import static java.lang.System.out;
 
 public class ConsoleBoardView implements View {
-    private final static String O_MARK = " O ";
-    private final static String X_MARK = " X ";
-    private final static String EMPTY_MARK = "   ";
-    private final static String COL_SEPARATOR = "|";
-    private final static String ROW_SEPARATOR = "----";
-    private final static String LS = lineSeparator();
+    public final static String O_MARK = " O ";
+    public final static String X_MARK = " X ";
+    public final static String EMPTY_MARK = "   ";
+    public final static String COL_SEPARATOR = "|";
+    public final static String ROW_SEPARATOR = "----";
+    public final static String LS = lineSeparator();
 
-    private final CellStorage storage;
-    private final int size;
+    private final BoardCells boardCells;
+    private final BoardSize boardSize;
 
-    public ConsoleBoardView(final int size, final CellStorage storage) {
-        this.size = size;
-        this.storage = storage;
+    public ConsoleBoardView(BoardCells boardCells, BoardSize boardSize) {
+        this.boardCells = boardCells;
+        this.boardSize = boardSize;
     }
 
     @Override
     public void show() {
-        List<Cell> cells = storage.findAll();
+        List<Cell> cells = boardCells.get();
         for (int i = 0; i < cells.size(); i++) {
             printCell(cells.get(i));
             printSeparator(i, COL_SEPARATOR, LS);
             if (i < cells.size() - 1) {
-                printSeparator(i, "", ROW_SEPARATOR.repeat(size) + LS);
+                printSeparator(i, "", ROW_SEPARATOR.repeat(boardSize.size()) + LS);
             }
         }
         out.println();
@@ -46,6 +48,6 @@ public class ConsoleBoardView implements View {
     }
 
     private void printSeparator(final int i, final String expressionTrue, final String expressionFalse) {
-        out.print(i % size < size - 1 ? expressionTrue : expressionFalse);
+        out.print(i % boardSize.size() < boardSize.size() - 1 ? expressionTrue : expressionFalse);
     }
 }

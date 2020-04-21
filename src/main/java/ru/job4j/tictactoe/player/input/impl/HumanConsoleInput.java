@@ -1,16 +1,16 @@
 package ru.job4j.tictactoe.player.input.impl;
 
 import ru.job4j.tictactoe.cell.Cell;
-import ru.job4j.tictactoe.messages.MessagePrinter;
+import ru.job4j.tictactoe.message.MessagePrinter;
 import ru.job4j.tictactoe.player.input.PlayerInput;
 
 import java.util.Scanner;
 
-public class ConsolePlayerInput implements PlayerInput {
+public class HumanConsoleInput implements PlayerInput {
     private final Scanner scanner = new Scanner(System.in);
     private final MessagePrinter printer;
 
-    public ConsolePlayerInput(MessagePrinter printer) {
+    public HumanConsoleInput(MessagePrinter printer) {
         this.printer = printer;
     }
 

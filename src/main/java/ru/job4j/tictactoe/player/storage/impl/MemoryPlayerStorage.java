@@ -1,6 +1,7 @@
-package ru.job4j.tictactoe.player.storage;
+package ru.job4j.tictactoe.player.storage.impl;
 
 import ru.job4j.tictactoe.player.Player;
+import ru.job4j.tictactoe.player.storage.PlayerStorage;
 
 import java.util.ArrayList;
 import java.util.List;
