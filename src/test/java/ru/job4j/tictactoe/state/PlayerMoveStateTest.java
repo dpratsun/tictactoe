@@ -1,10 +1,10 @@
 package ru.job4j.tictactoe.state;
 
 import org.junit.Test;
-import ru.job4j.tictactoe.messages.MessagePrinter;
-import ru.job4j.tictactoe.messages.Messages;
+import ru.job4j.tictactoe.message.MessagePrinter;
+import ru.job4j.tictactoe.message.Message;
 import ru.job4j.tictactoe.player.Player;
-import ru.job4j.tictactoe.player.provider.PlayerProvider;
+import ru.job4j.tictactoe.player.provider.CurrentPlayerProvider;
 import ru.job4j.tictactoe.state.impl.CheckWinState;
 import ru.job4j.tictactoe.state.impl.PlayerMoveState;
 import ru.job4j.tictactoe.view.View;
@@ -17,7 +17,7 @@ public class PlayerMoveStateTest {
     public void invocationOfPerformMethod() {
         StateStorage storage = mock(StateStorage.class);
         when(storage.get(CheckWinState.class.getName())).thenReturn(mock(State.class));
-        PlayerProvider provider = mock(PlayerProvider.class);
+        CurrentPlayerProvider provider = mock(CurrentPlayerProvider.class);
         Player player = mock(Player.class);
         when(player.getName()).thenReturn("Dmitry");
         when(provider.get()).thenReturn(player);
@@ -27,12 +27,12 @@ public class PlayerMoveStateTest {
 
         new PlayerMoveState(storage, provider, printer, view).perform(context);
 
-        verify(printer).print(Messages.PLAYER_MAKE_MOVE_MESSAGE, "Dmitry");
+        verify(printer).print(Message.PLAYER_MAKE_MOVE_MESSAGE, "Dmitry");
         verify(player).makeMove();
-        verify(printer).print(Messages.PLAYER_MOVE_PERFORMED_MESSAGE, "Dmitry");
+        verify(printer).print(Message.PLAYER_MOVE_PERFORMED_MESSAGE, "Dmitry");
         verify(view).show();
         verify(storage).get(CheckWinState.class.getName());
-        verify(context).setNext(any(State.class));
+        verify(context).setCurrentState(any(State.class));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PlayerMoveStateTest {
         assertFalse(
                 new PlayerMoveState(
                         mock(StateStorage.class),
-                        mock(PlayerProvider.class),
+                        mock(CurrentPlayerProvider.class),
                         mock(MessagePrinter.class),
                         mock(View.class)
                 ).isEndState()

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.tictactoe.cell.Cell;
 import ru.job4j.tictactoe.logic.Logic;
-import ru.job4j.tictactoe.messages.MessagePrinter;
+import ru.job4j.tictactoe.message.MessagePrinter;
 import ru.job4j.tictactoe.player.impl.GamePlayer;
 import ru.job4j.tictactoe.player.input.PlayerInput;
 
@@ -20,7 +20,7 @@ public class GamePlayerTest {
     @Before
     public void setUp() {
         input = mock(PlayerInput.class);
-        when(input.get()).thenReturn(new Cell(0, 0));
+        when(input.get()).thenReturn(mock(Cell.class));
 
         printer = mock(MessagePrinter.class);
         logic = mock(Logic.class);

@@ -2,7 +2,6 @@ package ru.job4j.tictactoe.policy;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.tictactoe.policy.impl.MultipleWinsPolicy;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

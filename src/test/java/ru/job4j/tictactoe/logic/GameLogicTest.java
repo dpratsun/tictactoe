@@ -2,35 +2,28 @@ package ru.job4j.tictactoe.logic;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.tictactoe.board.Board;
 import ru.job4j.tictactoe.cell.Cell;
-import ru.job4j.tictactoe.cell.CellStorage;
 import ru.job4j.tictactoe.logic.impl.GameLogic;
 import ru.job4j.tictactoe.policy.WinPolicy;
 
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-import static ru.job4j.tictactoe.cell.Mark.Empty;
 import static ru.job4j.tictactoe.cell.Mark.X;
 
 public class GameLogicTest {
-    private CellStorage storage;
+    private Board board;
     private WinPolicy policy;
     private Logic logic;
 
     @Before
     public void setUp() {
-        storage = mock(CellStorage.class);
+        board = mock(Board.class);
         policy = mock(WinPolicy.class);
-        logic = new GameLogic(storage, policy, 2);
-    }
-
-    @Test
-    public void whenLogicCreatedThanCertainAmountOfCellsShouldBeAddedToStorage() {
-        verify(storage, times(2 * 2)).add(any(Cell.class));
+        logic = new GameLogic(policy, board);
     }
 
     @Test
@@ -47,49 +40,28 @@ public class GameLogicTest {
 
     @Test
     public void whenEmptyCellsPresentThanIsMoveAvailableShouldReturnTrue() {
-        when(storage.findAll()).thenReturn(List.of(new Cell(0, 0)));
+        when(board.get()).thenReturn(List.of(new Cell(0, 0)));
         assertTrue(logic.isMoveAvailable());
     }
 
     @Test
     public void whenEmptyCellsNotPresentThanIsMoveAvailableShouldReturnFalse() {
-        when(storage.findAll()).thenReturn(List.of(new Cell(0, 0, X)));
+        when(board.get()).thenReturn(List.of(new Cell(0, 0, X)));
         assertFalse(logic.isMoveAvailable());
     }
 
     @Test
-    public void whenResetBoardThanCellMarkShouldBeEmpty() {
-        Cell cell = new Cell(0 , 0 , X);
-        when(storage.findAll()).thenReturn(List.of(cell));
-
-        assertThat(cell.getMark(), is(X));
-
+    public void whenResetBoardThanBoardResetShouldBeInvoked() {
         logic.resetBoard();
 
-        assertThat(cell.getMark(), is(Empty));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void whenCellAlreadyMarkedThanPlayerMoveThrowsException() {
-        Cell cell = new Cell(0 , 0 , X);
-        when(storage.find(any(Cell.class))).thenReturn(cell);
-
-        logic.playerMove(cell);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void whenCellNotFoundThanPlayerMoveThrowsException() {
-        doThrow(new IndexOutOfBoundsException("Error")).when(storage).find(any(Cell.class));
-        logic.playerMove(new Cell(0, 0));
+        verify(board).reset();
     }
 
     @Test
-    public void whenCellEmptyThanCellMarkShouldChange() {
-        Cell empty = new Cell(0 , 0);
-        when(storage.find(any(Cell.class))).thenReturn(empty);
+    public void whenPlayerMoveThanBoardUpdateShouldBeInvoked() {
+        Cell cell = new Cell(0, 0, X);
+        logic.playerMove(cell);
 
-        logic.playerMove(new Cell(0, 0, X));
-
-        assertThat(empty.getMark(), is(X));
+        verify(board).update(cell);
     }
 }

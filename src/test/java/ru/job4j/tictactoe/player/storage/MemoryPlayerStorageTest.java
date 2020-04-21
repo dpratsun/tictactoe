@@ -2,6 +2,7 @@ package ru.job4j.tictactoe.player.storage;
 
 import org.junit.Test;
 import ru.job4j.tictactoe.player.Player;
+import ru.job4j.tictactoe.player.storage.impl.MemoryPlayerStorage;
 
 import java.util.List;
 

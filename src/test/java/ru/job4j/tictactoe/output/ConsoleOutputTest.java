@@ -8,6 +8,7 @@ import ru.job4j.tictactoe.output.impl.ConsoleOutput;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static java.lang.System.lineSeparator;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,6 +29,6 @@ public class ConsoleOutputTest {
     @Test
     public void name() {
         new ConsoleOutput().print("Test");
-        assertThat(new String(byteArray.toByteArray()), is("Test"));
+        assertThat(new String(byteArray.toByteArray()), is("Test" + lineSeparator()));
     }
 }

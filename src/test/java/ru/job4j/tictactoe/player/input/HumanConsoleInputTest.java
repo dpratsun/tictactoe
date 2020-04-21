@@ -3,8 +3,8 @@ package ru.job4j.tictactoe.player.input;
 import org.junit.After;
 import org.junit.Test;
 import ru.job4j.tictactoe.cell.Cell;
-import ru.job4j.tictactoe.messages.MessagePrinter;
-import ru.job4j.tictactoe.player.input.impl.ConsolePlayerInput;
+import ru.job4j.tictactoe.message.MessagePrinter;
+import ru.job4j.tictactoe.player.input.impl.HumanConsoleInput;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class ConsolePlayerInputTest {
+public class HumanConsoleInputTest {
     private final InputStream sysIn = System.in;
 
     @After
@@ -27,7 +27,7 @@ public class ConsolePlayerInputTest {
     @Test
     public void whenPlayerInputTwoNumbersThanCellShouldBeReturn() {
         System.setIn(new ByteArrayInputStream(("00").getBytes()));
-        ConsolePlayerInput input = new ConsolePlayerInput(mock(MessagePrinter.class));
+        HumanConsoleInput input = new HumanConsoleInput(mock(MessagePrinter.class));
 
         assertThat(input.get(), is(new Cell(0, 0)));
     }
@@ -36,7 +36,7 @@ public class ConsolePlayerInputTest {
     public void whenPlayerInputStringThanPrinterShouldPrintError() {
         System.setIn(new ByteArrayInputStream(("str" + lineSeparator() + "00").getBytes()));
         MessagePrinter printer = mock(MessagePrinter.class);
-        ConsolePlayerInput input = new ConsolePlayerInput(printer);
+        HumanConsoleInput input = new HumanConsoleInput(printer);
 
         input.get();
 
