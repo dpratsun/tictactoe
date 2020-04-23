@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ru.job4j.tictactoe.message.Message.CELL_ADDED_ERROR_MESSAGE;
-import static ru.job4j.tictactoe.message.Message.INDEX_INPUT_ERROR_MESSAGE;
 
 public class MemoryCellStorage implements CellStorage {
     private final List<Cell> cells = new ArrayList<>();

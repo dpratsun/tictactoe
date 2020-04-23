@@ -1,6 +1,7 @@
-package ru.job4j.tictactoe.policy;
+package ru.job4j.tictactoe.policy.impl;
 
 import ru.job4j.tictactoe.cell.Mark;
+import ru.job4j.tictactoe.policy.WinPolicy;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,12 +2,14 @@ package ru.job4j.tictactoe.state.impl;
 
 import ru.job4j.tictactoe.board.BoardSize;
 import ru.job4j.tictactoe.message.MessagePrinter;
-import ru.job4j.tictactoe.message.Message;
 import ru.job4j.tictactoe.state.State;
 import ru.job4j.tictactoe.state.StateContext;
 import ru.job4j.tictactoe.state.StateStorage;
 
 import java.util.Objects;
+
+import static java.lang.String.valueOf;
+import static ru.job4j.tictactoe.message.Message.START_MESSAGE;
 
 public class StartState implements State {
     private final StateStorage storage;
@@ -22,7 +24,7 @@ public class StartState implements State {
 
     @Override
     public void perform(StateContext context) {
-        printer.print(Message.START_MESSAGE, String.valueOf(boardSize.size()));
+        printer.print(START_MESSAGE, valueOf(boardSize.size()));
         context.setCurrentState(storage.get(InitializeState.class.getName()));
     }
 

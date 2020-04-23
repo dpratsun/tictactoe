@@ -3,9 +3,11 @@ package ru.job4j.tictactoe.board.impl;
 import ru.job4j.tictactoe.board.Board;
 import ru.job4j.tictactoe.cell.Cell;
 import ru.job4j.tictactoe.cell.CellStorage;
-import ru.job4j.tictactoe.message.Message;
 
 import java.util.List;
+
+import static java.lang.String.valueOf;
+import static ru.job4j.tictactoe.message.Message.INDEX_INPUT_ERROR_MESSAGE;
 
 public class GameBoard implements Board {
     public final static int DEFAULT_BOARD_SIZE = 3;
@@ -37,7 +39,7 @@ public class GameBoard implements Board {
         try {
             storage.update(cell);
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(Message.INDEX_INPUT_ERROR_MESSAGE.getValue(String.valueOf(size)));
+            throw new IllegalArgumentException(INDEX_INPUT_ERROR_MESSAGE.getValue(valueOf(size)));
         }
     }
 

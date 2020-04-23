@@ -5,6 +5,8 @@ import ru.job4j.tictactoe.board.impl.GameBoard;
 import ru.job4j.tictactoe.cell.Cell;
 import ru.job4j.tictactoe.cell.Mark;
 import ru.job4j.tictactoe.cell.impl.MemoryCellStorage;
+import ru.job4j.tictactoe.policy.impl.MultipleWinsPolicy;
+import ru.job4j.tictactoe.policy.impl.OneWinPolicy;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

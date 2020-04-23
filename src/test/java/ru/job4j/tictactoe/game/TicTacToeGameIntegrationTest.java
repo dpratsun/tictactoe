@@ -11,11 +11,10 @@ import ru.job4j.tictactoe.message.Message;
 import ru.job4j.tictactoe.message.MessagePrinter;
 import ru.job4j.tictactoe.player.impl.GamePlayer;
 import ru.job4j.tictactoe.player.input.PlayerInput;
-import ru.job4j.tictactoe.player.storage.impl.MemoryCurrentPlayerStorage;
 import ru.job4j.tictactoe.player.storage.impl.MemoryPlayerStorage;
 
-import ru.job4j.tictactoe.policy.MultipleWinsPolicy;
-import ru.job4j.tictactoe.policy.OneWinPolicy;
+import ru.job4j.tictactoe.policy.impl.MultipleWinsPolicy;
+import ru.job4j.tictactoe.policy.impl.OneWinPolicy;
 import ru.job4j.tictactoe.state.impl.MemoryStateStorage;
 import ru.job4j.tictactoe.state.impl.StartState;
 import ru.job4j.tictactoe.view.View;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.*;
 import static ru.job4j.tictactoe.board.impl.GameBoard.DEFAULT_BOARD_SIZE;
 import static ru.job4j.tictactoe.cell.Mark.O;
 import static ru.job4j.tictactoe.cell.Mark.X;
-import static ru.job4j.tictactoe.policy.MultipleWinsPolicy.DEFAULT_COUNT_TO_WIN;
+import static ru.job4j.tictactoe.policy.impl.MultipleWinsPolicy.DEFAULT_COUNT_TO_WIN;
 
 
 public class TicTacToeGameIntegrationTest {

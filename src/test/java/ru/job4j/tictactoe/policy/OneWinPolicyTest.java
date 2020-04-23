@@ -5,6 +5,7 @@ import org.junit.Test;
 import ru.job4j.tictactoe.board.BoardCell;
 import ru.job4j.tictactoe.board.BoardSize;
 import ru.job4j.tictactoe.cell.Cell;
+import ru.job4j.tictactoe.policy.impl.OneWinPolicy;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
