@@ -25,12 +25,12 @@ public class BotRandomInput implements PlayerInput {
                 .stream()
                 .filter(c -> Empty.equals(c.getMark()))
                 .collect(Collectors.toList());
+        var foundCell = cells.get(getCellIndex(cells.size()));
 
-        return cells.get(getCellIndex(cells.size()));
+        return new Cell(foundCell.getX(), foundCell.getY());
     }
 
     private int getCellIndex(int listSize) {
         return listSize > 1 ? random.nextInt(listSize - 1) : 0;
     }
-
 }

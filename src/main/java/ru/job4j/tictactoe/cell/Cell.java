@@ -25,6 +25,14 @@ public class Cell {
         return mark;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public void setMark(Mark mark) {
         if (!Empty.equals(this.mark)) {
             throw new IllegalArgumentException(CELL_MARKED_ERROR_MESSAGE.getValue());
