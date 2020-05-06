@@ -1,33 +1,25 @@
 package ru.job4j.tictactoe.policy.impl;
 
-import ru.job4j.tictactoe.board.BoardCell;
-import ru.job4j.tictactoe.board.BoardSize;
-import ru.job4j.tictactoe.cell.Mark;
+import ru.job4j.tictactoe.logic.Logic;
+import ru.job4j.tictactoe.logic.Mark;
 import ru.job4j.tictactoe.policy.WinPolicy;
 
 public class OneWinPolicy implements WinPolicy {
-    private final BoardCell boardCell;
-    private final BoardSize boardSize;
-
-    public OneWinPolicy(BoardCell boardCell, BoardSize boardSize) {
-        this.boardCell = boardCell;
-        this.boardSize = boardSize;
-    }
 
     @Override
-    public boolean isWin(Mark mark) {
+    public boolean isWin(Mark mark, Logic logic) {
         boolean result = false;
         int diagonalCnt = 0;
         int mirrorDiagonalCnt = 0;
 
-        for (int x = 0; x < boardSize.size(); x++) {
-            mirrorDiagonalCnt += mark.equals(getCellMark((boardSize.size() - x - 1), x)) ? 1 : 0;
-            if (mirrorDiagonalCnt == boardSize.size()) {
+        for (int x = 0; x < logic.getBoardSize(); x++) {
+            mirrorDiagonalCnt += mark.equals(logic.getMark(logic.getBoardSize() - x - 1, x)) ? 1 : 0;
+            if (mirrorDiagonalCnt == logic.getBoardSize()) {
                 result = true;
                 break;
             }
-            if (mark.equals(getCellMark(x, x))) {
-                if (++diagonalCnt == boardSize.size() || isRowOrColumnFilledByMark(mark, x)) {
+            if (mark.equals(logic.getMark(x, x))) {
+                if (++diagonalCnt == logic.getBoardSize() || isRowOrColumnFilledByMark(logic, mark, x)) {
                     result = true;
                     break;
                 }
@@ -36,19 +28,15 @@ public class OneWinPolicy implements WinPolicy {
         return result;
     }
 
-    private boolean isRowOrColumnFilledByMark(Mark mark, final int x) {
+    private boolean isRowOrColumnFilledByMark(Logic logic, Mark mark, final int x) {
         var rowCnt = 0;
         var colCnt = 0;
 
-        for (int y = 0; y < boardSize.size(); y++) {
-            rowCnt += mark.equals(getCellMark(x, y)) ? 1 : 0;
-            colCnt += mark.equals(getCellMark(y, x)) ? 1 : 0;
+        for (int y = 0; y < logic.getBoardSize(); y++) {
+            rowCnt += mark.equals(logic.getMark(x, y)) ? 1 : 0;
+            colCnt += mark.equals(logic.getMark(y, x)) ? 1 : 0;
         }
 
-        return rowCnt == boardSize.size() || colCnt == boardSize.size();
-    }
-
-    private Mark getCellMark(int x, int y) {
-        return boardCell.get(x, y).getMark();
+        return rowCnt == logic.getBoardSize() || colCnt == logic.getBoardSize();
     }
 }

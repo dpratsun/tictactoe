@@ -2,19 +2,15 @@ package ru.job4j.tictactoe.player.input;
 
 import org.junit.After;
 import org.junit.Test;
-import ru.job4j.tictactoe.cell.Cell;
-import ru.job4j.tictactoe.message.MessagePrinter;
+import ru.job4j.tictactoe.message.Message;
 import ru.job4j.tictactoe.player.input.impl.HumanConsoleInput;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 
 import static java.lang.System.lineSeparator;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static ru.job4j.tictactoe.message.Message.STRING_INPUT_ERROR_MESSAGE;
 
 public class HumanConsoleInputTest {
     private final InputStream sysIn = System.in;
@@ -27,19 +23,23 @@ public class HumanConsoleInputTest {
     @Test
     public void whenPlayerInputTwoNumbersThanCellShouldBeReturn() {
         System.setIn(new ByteArrayInputStream(("00").getBytes()));
-        HumanConsoleInput input = new HumanConsoleInput(mock(MessagePrinter.class));
+        HumanConsoleInput input = new HumanConsoleInput();
 
-        assertThat(input.get(), is(new Cell(0, 0)));
+        assertThat(input.get(), is(new Pair(0, 0)));
     }
 
     @Test
     public void whenPlayerInputStringThanPrinterShouldPrintError() {
         System.setIn(new ByteArrayInputStream(("str" + lineSeparator() + "00").getBytes()));
-        MessagePrinter printer = mock(MessagePrinter.class);
-        HumanConsoleInput input = new HumanConsoleInput(printer);
+        HumanConsoleInput input = new HumanConsoleInput();
+        PrintStream out = System.out;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(os));
 
         input.get();
 
-        verify(printer).print(anyString());
+        System.setOut(out);
+
+        assertThat(new String(os.toByteArray()), is(STRING_INPUT_ERROR_MESSAGE.getValue() + lineSeparator()));
     }
 }

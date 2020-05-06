@@ -1,36 +1,43 @@
 package ru.job4j.tictactoe.player.input.impl;
 
-import ru.job4j.tictactoe.board.BoardCells;
-import ru.job4j.tictactoe.cell.Cell;
+import ru.job4j.tictactoe.logic.Logic;
+import ru.job4j.tictactoe.player.input.Pair;
 import ru.job4j.tictactoe.player.input.PlayerInput;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-import static ru.job4j.tictactoe.cell.Mark.Empty;
+import static ru.job4j.tictactoe.logic.Mark.Empty;
 
 public class BotRandomInput implements PlayerInput {
-    private final BoardCells cells;
+    private final Logic logic;
     private final Random random;
 
-    public BotRandomInput(BoardCells cells, Random random) {
-        this.cells = cells;
+    public BotRandomInput(Logic logic, Random random) {
+        this.logic = logic;
         this.random = random;
     }
 
     @Override
-    public Cell get() {
-        List<Cell> cells = this.cells.get()
-                .stream()
-                .filter(c -> Empty.equals(c.getMark()))
-                .collect(Collectors.toList());
-        var foundCell = cells.get(getCellIndex(cells.size()));
-
-        return new Cell(foundCell.getX(), foundCell.getY());
+    public Pair get() {
+        List<Pair> emptyCells = getEmptyCells();
+        return emptyCells.get(getCellIndex(emptyCells.size()));
     }
 
     private int getCellIndex(int listSize) {
         return listSize > 1 ? random.nextInt(listSize - 1) : 0;
+    }
+
+    private List<Pair> getEmptyCells() {
+        List<Pair> result = new ArrayList<>();
+        for (int x = 0; x < logic.getBoardSize(); x++) {
+            for (int y = 0; y < logic.getBoardSize(); y++) {
+                if (Empty.equals(logic.getMark(x, y))) {
+                    result.add(new Pair(x, y));
+                }
+            }
+        }
+        return result;
     }
 }

@@ -1,6 +1,6 @@
 package ru.job4j.tictactoe.player;
 
-import ru.job4j.tictactoe.cell.Mark;
+import ru.job4j.tictactoe.logic.Mark;
 
 public interface Player {
     String getName();

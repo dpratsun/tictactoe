@@ -1,14 +1,15 @@
 package ru.job4j.tictactoe.logic;
 
-import ru.job4j.tictactoe.cell.Cell;
-import ru.job4j.tictactoe.cell.Mark;
-
 public interface Logic {
     boolean isWin(Mark mark);
 
-    boolean isMoveAvailable();
+    boolean isEmptyMarkPresent();
 
-    void playerMove(Cell cell);
+    void setMark(int x, int y, Mark mark);
 
-    void resetBoard();
+    int getBoardSize();
+
+    Mark getMark(int x, int y);
+
+    void resetGameBoard(int size);
 }
